@@ -17,7 +17,6 @@ CATEGORIES = (
 class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.FloatField()
-    price1 = models.FloatField()
     description = models.TextField(max_length=250)
     category = models.CharField(
         max_length=3,
