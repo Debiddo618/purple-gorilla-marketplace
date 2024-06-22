@@ -24,7 +24,10 @@ class Product(models.Model):
         choices=CATEGORIES,
         default=CATEGORIES[0][0]
     )
-    image = models.CharField(max_length=250)
+    image = models.CharField(
+        max_length=250,
+        default='https://i.imgur.com/DTQfCw5.png'
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -32,4 +35,4 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         # Use the 'reverse' function to dynamically find the URL for viewing this cat's details
-        return reverse('index')
+        return reverse('product-index')

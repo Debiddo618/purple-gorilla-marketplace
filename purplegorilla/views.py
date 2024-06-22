@@ -18,8 +18,6 @@ def index(request):
 def base(request):
     return render(request, 'base.html')
 
-# create a product
-
 
 class ProductCreate(CreateView):
     model = Product
@@ -32,14 +30,15 @@ class ProductCreate(CreateView):
         # Let the CreateView do its job as usual
         return super().form_valid(form)
 
-# show a product by id
+
+class ProductUpdate(UpdateView):
+    model = Product
+    fields = ['name', 'image', 'description', 'category', 'price']
 
 
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, 'products/detail.html', {'product': product})
-
-# signup form for user
 
 
 def signup(request):
