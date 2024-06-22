@@ -35,6 +35,9 @@ class ProductUpdate(UpdateView):
     model = Product
     fields = ['name', 'image', 'description', 'category', 'price']
 
+class ProductDelete(DeleteView):
+    model = Product
+    success_url = '/products'
 
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)

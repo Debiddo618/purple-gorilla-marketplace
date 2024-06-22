@@ -8,6 +8,9 @@ urlpatterns = [
     path('product/create', views.ProductCreate.as_view(), name="product-create"),
     path('product/<int:pk>/update',
          views.ProductUpdate.as_view(), name="product-update"),
+    path('products/<int:pk>/delete/',
+         views.ProductDelete.as_view(), name='product-delete'),
+
     path('product/<int:product_id>', views.product_detail, name="product-detail"),
     path('accounts/signup/', views.signup, name='signup'),
 
