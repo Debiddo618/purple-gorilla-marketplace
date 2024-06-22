@@ -17,11 +17,18 @@ def base(request):
 
 class ProductCreate(CreateView):
     model = Product
-    fields = ['name','image','description', 'category','price']
+    fields = ['name', 'image', 'description', 'category', 'price']
 
     def form_valid(self, form):
         # Assign the logged in user (self.request.user)
-        form.instance.user = self.request.user  
+        form.instance.user = self.request.user
         # form.instance is the product
         # Let the CreateView do its job as usual
         return super().form_valid(form)
+
+# show a product by id
+
+
+def product_detail(request, product_id):
+    product = Product.objects.get(id=product_id)
+    return render(request, 'products/detail.html', {'product': product})

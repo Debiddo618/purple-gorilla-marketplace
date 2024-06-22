@@ -9,22 +9,24 @@
     <div class="container">
         <div class="row">
             {% for product in products %}
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="{{product.image}}" alt="">
-                        <div class="card-body">
-                            <div class="card-title">
-                                Name: {{product.name}}
-                            </div>
-                            <div class="card-text">
-                                <div>Seller: {{product.user}}</div>
-                                <div>Price: ${{product.price}}</div>
-                                <div>Description: {{product.description}}</div>
-                                <div>Category: {{product.get_category_display}}</div>
+                <a href="{% url "product-detail" product.id %}">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <img src="{{product.image}}" alt="">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    Name: {{product.name}}
+                                </div>
+                                <div class="card-text">
+                                    <div>Seller: {{product.user}}</div>
+                                    <div>Price: ${{product.price}}</div>
+                                    <div>Description: {{product.description}}</div>
+                                    <div>Category: {{product.get_category_display}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
             {%endfor%}
         </div>
     </div>

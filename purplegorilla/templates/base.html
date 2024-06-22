@@ -65,7 +65,7 @@
 
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">All Products</a>
+                      <a class="nav-link" href="{% url 'index' %}">All Products</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'product-create' %}">Add a Product</a>
@@ -77,11 +77,6 @@
               </div>
             </div>
           </nav>
-
-
-
-
-
     </header>
     <main>
         {% block content %}
