@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 from .models import Product
 # Create your views here.
 
@@ -32,3 +35,25 @@ class ProductCreate(CreateView):
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, 'products/detail.html', {'product': product})
+
+# signup form for user
+
+
+def signup(request):
+    # Handle the POST request
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # STEP 1: Create a user in the databse from the UserCreationForm
+            login(request, user)  # STEP 2: Log in as the craeted user
+            return redirect('product-index')
+        else:
+            error_message = 'Invalid sign up - try again'
+    # Handle the GET request (render the form)
+    form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form, 'error_message': error_message})
+
+
+class Home(LoginView):
+    template_name = 'home.html'
