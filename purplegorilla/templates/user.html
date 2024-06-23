@@ -1,26 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block head %}
-{% comment %} <link rel="stylesheet" href="{% static 'css/cats/cat-index.css' %}" /> {% endcomment %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/home.css' %}" /> {% endcomment %}
 {% endblock %}
+
 {% block content %}
-{% if not user.is_authenticated %}
-    <section>
-        <form action="{% url 'home' %}" method="post" class="login">
-            <h1>Login</h1>
-            {% csrf_token %} {{ form.as_p }}
-            <input type="hidden" name="next" value="{{ next }}" />
-            <button type="submit" class="btn submit">Login</button>
-        </form>
-    </section>
-{% else %}
-    <h1>Home Page</h1>
+
+{% if user.is_authenticated %}
+    <h1>{{user.username}}'s page</h1>
     <div class="container">
         <div class="row">
             {% for product in products %}
                 <div class="col-md-3 mb-3">
                     <div class="card">
-                        <img src="{{product.image}}" style="height: 300px; object-fit: cover;" alt="">
+                        <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
                         <div class="card-body">
                             <div class="card-title">
                                 <a href="{% url "product-detail" product.id %}">

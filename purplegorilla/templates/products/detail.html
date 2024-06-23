@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="card" style="width: 18rem;">
-    <img src="{{product.image}}" alt="">
+    <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="">
     <div class="card-body">
         <div class="card-title">
             Name: {{product.name}}
@@ -17,9 +17,10 @@
             <div>Price: ${{product.price}}</div>
             <div>Description: {{product.description}}</div>
             <div>Category: {{product.get_category_display}}</div>
-            <a href="{% url 'product-update' product.id %}" class="btn warn">Edit</a>
-            <a href="{% url 'product-delete' product.id %}" class="btn danger">Delete</a>
-
+            {% if product.user == user %}
+                <a href="{% url 'product-update' product.id %}" class="btn warn">Edit</a>
+                <a href="{% url 'product-delete' product.id %}" class="btn danger">Delete</a>
+            {% endif %}
         </div>
     </div>
 </div>

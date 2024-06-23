@@ -4,7 +4,7 @@ from . import views  # Import views to connect routes to view functions
 urlpatterns = [
     path('', views.Home.as_view(), name='home'),
     path('products', views.index, name='product-index'),
-    path('base', views.base, name='base'),
+    path('user/<int:user_id>', views.user, name='user'),
     path('product/create', views.ProductCreate.as_view(), name="product-create"),
     path('product/<int:pk>/update',
          views.ProductUpdate.as_view(), name="product-update"),

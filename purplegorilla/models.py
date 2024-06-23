@@ -6,21 +6,21 @@ CATEGORIES = (
     ('G', 'Generic'),
     ('E', 'Electronics'),
     ('F', 'Fashion'),
-    ('H&F', 'Home and Furnitures'),
-    ('B&H', 'Beauty and Health'),
-    ('B&M', 'Books and Media'),
-    ('S&O', 'Sports and Outdoor'),
-    ('T&B', 'Toys and Baby Products'),
-    ('F&B', 'Food and Beverages')
+    ('HF', 'Home and Furnitures'),
+    ('BH', 'Beauty and Health'),
+    ('BM', 'Books and Media'),
+    ('SO', 'Sports and Outdoor'),
+    ('TB', 'Toys and Baby Products'),
+    ('FB', 'Food and Beverages')
 )
 
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(max_length=250)
     category = models.CharField(
-        max_length=3,
+        max_length=2,
         choices=CATEGORIES,
         default=CATEGORIES[0][0]
     )

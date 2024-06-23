@@ -10,13 +10,19 @@ from .models import Product
 def index(request):
     products = Product.objects.all()
     product_name = request.GET.get('product_name')
+    product_category = request.GET.get('category')
     if product_name != '' and product_name is not None:
         products = Product.objects.filter(name__icontains=product_name)
+
+    if product_category != '' and product_category is not None:
+        products = Product.objects.filter(category=product_category)
+
     return render(request, 'purplegorilla/index.html', {'products': products})
 
 
-def base(request):
-    return render(request, 'base.html')
+def user(request, user_id):
+    products = Product.objects.filter(user_id=user_id)
+    return render(request, 'user.html', {'products': products})
 
 
 class ProductCreate(CreateView):
@@ -35,9 +41,11 @@ class ProductUpdate(UpdateView):
     model = Product
     fields = ['name', 'image', 'description', 'category', 'price']
 
+
 class ProductDelete(DeleteView):
     model = Product
     success_url = '/products'
+
 
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
