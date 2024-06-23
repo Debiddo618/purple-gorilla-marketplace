@@ -1,21 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load form_tags %}
 
 {% block head %}
-{% comment %} <link rel="stylesheet" href="{% static 'css/form.css' %}" /> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
 {% endblock %}
 
 {% block content %}
-    {% if product %}
-    <h1>Edit {{ product.name }}</h1>
-    {% else %}
-    <h1>Sell a Product</h1>
-    {% endif %}
-    <form action="" method="post" class="form-container">
+    <form action="" method="post" class='w-50 mx-auto mt-5 border rounded p-4'>
         {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <button type="submit" class="btn submit">Submit!</button>
+        {% if product %}
+        <h1 class='text-center'>Edit Product</h1>
+        {% else %}
+        <h1 class='text-center'>Sell a Product</h1>
+        {% endif %}
+        <div class="mb-3">
+            <label for="id_name" class="form-label">Name</label>
+            {{ form.name|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_image" class="form-label">Image</label>
+            {{ form.image|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Description</label>
+            {{ form.description|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_category" class="form-label">Category</label>
+            {{ form.category|add_class:"form-select" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_price" class="form-label">Price</label>
+            {{ form.price|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-outline-primary w-100">Submit!</button>
     </form>
 {% endblock %}
