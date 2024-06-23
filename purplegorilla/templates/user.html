@@ -36,6 +36,13 @@
     <h1>{{user.username}}'s Sold Items</h1>
     <h1>{{user.username}}'s Pendings</h1>
     <h1>{{user.username}}'s Order History</h1>
+    {% for order in orders%}
+        <p>User: {{order.user}}</p>
+        <p>Product: {{order.product}}</p>
+        <p>Product Decription: {{order.product.description}}</p>
+        <p>Status: {{order.status}}</p>
+        <p>Order Total: {{order.total_price}}</p>
+    {% endfor %}
 
 
 {% endif %}

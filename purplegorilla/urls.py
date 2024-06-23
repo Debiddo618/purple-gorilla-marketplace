@@ -10,9 +10,10 @@ urlpatterns = [
          views.ProductUpdate.as_view(), name="product-update"),
     path('products/<int:pk>/delete/',
          views.ProductDelete.as_view(), name='product-delete'),
-
     path('product/<int:product_id>', views.product_detail, name="product-detail"),
     path('order/<int:product_id>', views.confirm_order, name="order-confirm"),
+    path('order/create/<int:user_id>/<int:product_id>',
+         views.order_create, name="order-create"),
     path('accounts/signup/', views.signup, name='signup'),
 
 ]

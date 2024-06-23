@@ -4,22 +4,25 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from .models import Product, Order
+from decimal import Decimal
+
 # Create your views here.
 
-# class OrderCreate(CreateView):
-#     model = Order
-#     fields = ['name', 'image', 'description', 'category', 'price']
 
-#     def form_valid(self, form):
-#         # Assign the logged in user (self.request.user)
-#         form.instance.user = self.request.user
-#         # form.instance is the product
-#         # Let the CreateView do its job as usual
-#         return super().form_valid(form)
-    
+def order_create(request, user_id, product_id):
+    print("hello")
+    print(user_id)
+    product = Product.objects.get(id=product_id)
+
+    # Create the order and save it, status = pending
+    order = Order.objects.create(
+        user=request.user, product=product, total_price=Decimal(product.total_price()))
+    return redirect('user', user_id=user_id)
+
+
 def confirm_order(request, product_id):
     product = Product.objects.get(id=product_id)
-    return render(request,'orders/confirm_order.html',{'product':product})
+    return render(request, 'orders/confirm_order.html', {'product': product})
 
 
 def index(request):
@@ -36,8 +39,9 @@ def index(request):
 
 
 def user(request, user_id):
+    orders = Order.objects.filter(user_id=user_id)
     products = Product.objects.filter(user_id=user_id)
-    return render(request, 'user.html', {'products': products})
+    return render(request, 'user.html', {'products': products, 'orders': orders})
 
 
 class ProductCreate(CreateView):
@@ -73,8 +77,8 @@ def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()  # STEP 1: Create a user in the databse from the UserCreationForm
-            login(request, user)  # STEP 2: Log in as the craeted user
+            user = form.save()
+            login(request, user)
             return redirect('product-index')
         else:
             error_message = 'Invalid sign up - try again'
