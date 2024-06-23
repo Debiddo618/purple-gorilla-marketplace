@@ -8,50 +8,49 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    <h1>Confirm Order</h1>
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="{{product.image}}" class="img-fluid rounded-start" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">Name: {{product.name}}</h5>
-              <p class="card-text"> Price: {{product.price}}</p>
-              <p class="card-text"> Description: {{product.description}}</p>
-              <p class="card-text"><small class="text-body-secondary">Sold by: {{product.user.username}}</small></p>
+    <div class="container mx-auto d-flex flex-column justify-content-center align-items-center p-3">
+      <h1>Order Confirmation</h1>
+      <div class="card mb-3 w-50">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{product.image}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Name: {{product.name}}</h5>
+                <p class="card-text"> Price: {{product.price}}</p>
+                <p class="card-text"> Description: {{product.description}}</p>
+                <p class="card-text"><small class="text-body-secondary">Sold by: {{product.user.username}}</small></p>
+              </div>
             </div>
           </div>
-        </div>
+      </div>
+      <h1>Order Summary</h1>
+      <table class="table w-50">
+          <tbody>
+            <tr>
+              <td>Items:</td>
+              <td>${{product.price}}</td>
+            </tr>
+            <tr>
+              <td>Shipping and Handling:</td>
+              <td>$10.00</td>
+            </tr>
+            <tr>
+              <td>Total before Tax:</td>
+              <td>${{product.total_before_tax|floatformat:2}}</td>
+            </tr>
+            <tr>
+              <td>Estimated tax to be collected:</td>
+              <td>${{ product.estimated_tax|floatformat:2 }}</td>
+            </tr>
+            <tr>
+              <td class='h3'>Order Total:</td>
+              <td class='h3'>${{product.total_price|floatformat:2}}</td>
+            </tr>
+          </tbody>
+      </table>
+      <a class='btn btn-outline-warning w-50' href={% url 'order-create' user.id product.id %}>Place your Order</a>
     </div>
-    <h1>Order Summary</h1>
-    <table class="table w-25">
-        <tbody>
-          <tr>
-            <td>Items:</td>
-            <td>${{product.price}}</td>
-          </tr>
-          <tr>
-            <td>Shipping and Handling:</td>
-            <td>$10.00</td>
-          </tr>
-          <tr>
-            <td>Total before Tax:</td>
-            <td>${{product.total_before_tax|floatformat:2}}</td>
-          </tr>
-          <tr>
-            <td>Estimated tax to be collected:</td>
-            <td>${{ product.estimated_tax|floatformat:2 }}</td>
-          </tr>
-          <tr>
-            <td class='h3'>Order Total:</td>
-            <td class='h3'>${{product.total_price|floatformat:2}}</td>
-          </tr>
-        </tbody>
-    </table>
-    <a class='btn btn-outline-warning w-25' href={% url 'order-create' user.id product.id %}>Place your Order</a>
-
-
-      
 {% endif %}
 {% endblock %}
