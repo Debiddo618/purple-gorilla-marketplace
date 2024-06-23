@@ -33,6 +33,11 @@
                                 <div>Description: {{product.description}}</div>
                                 <div>Category: {{product.get_category_display}}</div>
                             </div>
+                            {% if user != product.user %}
+                                <a class="btn btn-outline-primary w-100 my-3" href='{% url "order-confirm" product.id %}'>Purchase Item</a>
+                            {% else %}
+                                <a class="btn btn-outline-danger w-100 my-3" href='{% url "product-delete" product.id %}'>Remove Listing</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,7 @@ urlpatterns = [
          views.ProductDelete.as_view(), name='product-delete'),
 
     path('product/<int:product_id>', views.product_detail, name="product-detail"),
+    path('order/<int:product_id>', views.confirm_order, name="order-confirm"),
     path('accounts/signup/', views.signup, name='signup'),
 
 ]

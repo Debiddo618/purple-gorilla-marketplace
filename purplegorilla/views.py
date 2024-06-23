@@ -3,8 +3,23 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
-from .models import Product
+from .models import Product, Order
 # Create your views here.
+
+# class OrderCreate(CreateView):
+#     model = Order
+#     fields = ['name', 'image', 'description', 'category', 'price']
+
+#     def form_valid(self, form):
+#         # Assign the logged in user (self.request.user)
+#         form.instance.user = self.request.user
+#         # form.instance is the product
+#         # Let the CreateView do its job as usual
+#         return super().form_valid(form)
+    
+def confirm_order(request, product_id):
+    product = Product.objects.get(id=product_id)
+    return render(request,'orders/confirm_order.html',{'product':product})
 
 
 def index(request):
