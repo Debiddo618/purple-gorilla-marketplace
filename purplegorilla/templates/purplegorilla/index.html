@@ -4,17 +4,7 @@
 <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 {% endblock %}
 {% block content %}
-{% if not user.is_authenticated %}
-    <section>
-        <form action="{% url 'home' %}" method="post" class="login">
-            <h1>Login</h1>
-            {% csrf_token %} 
-            {{ form.as_p }}
-            <input type="hidden" name="next" value="{{ next }}" />
-            <button type="submit" class="btn submit">Login</button>
-        </form>
-    </section>
-{% else %}
+{% if user.is_authenticated %}
     <div class="container p-3">
         <div class="row">
             {% for product in products %}

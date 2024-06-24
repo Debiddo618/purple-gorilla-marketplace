@@ -7,10 +7,14 @@ from django.urls import reverse
 from django.db.models import Q
 from .models import Product, Order
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # Run this command to seed the database: python3 manage.py seed --mode=refresh
 # Run this command to delete all products in database: python3 manage.py seed --mode=clear
 
+@login_required
 def order_create(request, user_id, product_id):
     product = Product.objects.get(id=product_id)
     product.status = True
@@ -22,17 +26,19 @@ def order_create(request, user_id, product_id):
     return redirect('user', user_id=user_id)
 
 
+@login_required
 def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     return render(request, 'orders/detail.html', {'order': order})
 
 
+@login_required
 def confirm_order(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, 'orders/confirm_order.html', {'product': product})
 
 
-class OrderUpdate(UpdateView):
+class OrderUpdate(LoginRequiredMixin, UpdateView):
     model = Order
     fields = ['status']
 
@@ -41,7 +47,7 @@ class OrderUpdate(UpdateView):
         return reverse('user', kwargs={'user_id': order.product.user.id})
 
 
-class OrderDelete(DeleteView):
+class OrderDelete(LoginRequiredMixin, DeleteView):
     model = Order
 
     def get_success_url(self):
@@ -53,6 +59,7 @@ class OrderDelete(DeleteView):
         return reverse('user', kwargs={'user_id': user_id})
 
 
+@login_required
 def index(request):
     products = Product.objects.filter(status=False)
     product_name = request.GET.get('product_name')
@@ -68,6 +75,7 @@ def index(request):
     return render(request, 'purplegorilla/index.html', {'products': products})
 
 
+@login_required
 def user(request, user_id):
     # get orders that belongs to the buyer and also associated with the seller
     orders = Order.objects.filter(
@@ -87,7 +95,7 @@ def user(request, user_id):
     return render(request, 'user.html', {'products': products, 'orders': orders})
 
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, CreateView):
     model = Product
     fields = ['name', 'image', 'description', 'category', 'price']
 
@@ -99,16 +107,17 @@ class ProductCreate(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdate(UpdateView):
+class ProductUpdate(LoginRequiredMixin, UpdateView):
     model = Product
     fields = ['name', 'image', 'description', 'category', 'price']
 
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = '/products'
 
 
+@login_required
 def product_detail(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, 'products/detail.html', {'product': product})
@@ -130,5 +139,5 @@ def signup(request):
     return render(request, 'signup.html', {'form': form, 'error_message': error_message})
 
 
-class Home(LoginView):
+class Home(LoginRequiredMixin, LoginView):
     template_name = 'home.html'
