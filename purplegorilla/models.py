@@ -38,6 +38,7 @@ class Product(models.Model):
         default='https://i.imgur.com/DTQfCw5.png'
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

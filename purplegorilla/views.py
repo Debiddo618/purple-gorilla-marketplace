@@ -15,6 +15,10 @@ class OrderDelete(DeleteView):
 
     def get_success_url(self):
         user_id = self.object.user.id
+        product = self.object.product
+        product.status = False
+        product.save()
+
         return reverse('user', kwargs={'user_id': user_id})
 
 
@@ -24,9 +28,9 @@ def order_update(request, order_id):
 
 
 def order_create(request, user_id, product_id):
-    print("hello")
-    print(user_id)
     product = Product.objects.get(id=product_id)
+    product.status = True
+    product.save()
 
     # Create the order and save it, status = pending
     order = Order.objects.create(
@@ -40,14 +44,16 @@ def confirm_order(request, product_id):
 
 
 def index(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(status=False)
     product_name = request.GET.get('product_name')
     product_category = request.GET.get('category')
     if product_name != '' and product_name is not None:
-        products = Product.objects.filter(name__icontains=product_name)
+        products = Product.objects.filter(
+            name__icontains=product_name, status=False)
 
     if product_category != '' and product_category is not None:
-        products = Product.objects.filter(category=product_category)
+        products = Product.objects.filter(
+            category=product_category, status=False)
 
     return render(request, 'purplegorilla/index.html', {'products': products})
 
