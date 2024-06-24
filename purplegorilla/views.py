@@ -9,6 +9,11 @@ from decimal import Decimal
 # Create your views here.
 
 
+def order_update(request, order_id):
+    order = Order.objects.get(id=order_id)
+    return render(request, 'orders/detail.html', {'order': order})
+
+
 def order_create(request, user_id, product_id):
     print("hello")
     print(user_id)
