@@ -27,7 +27,7 @@
             <label for="id_password" class="form-label">Password</label>
             {{ form.password|add_class:"form-control" }}
         </div>
-        <input type="hidden" name="next" value="{{ next }}" />
+        <input type="hidden" name="next" value="{% url 'product-index' %}" />
         <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
     </form>
 </section>
