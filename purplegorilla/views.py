@@ -3,10 +3,19 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
+from django.urls import reverse
 from .models import Product, Order
 from decimal import Decimal
 
 # Create your views here.
+
+
+class OrderDelete(DeleteView):
+    model = Order
+
+    def get_success_url(self):
+        user_id = self.object.user.id
+        return reverse('user', kwargs={'user_id': user_id})
 
 
 def order_update(request, order_id):

@@ -49,6 +49,6 @@
         </tbody>
     </table>
     <h1>Order Status: {{order.status}}</h1>
-    <button class='btn btn-outline-danger w-50'>Cancel Order</button>
+    <a class='btn btn-outline-danger w-50' href={% url 'order-delete' order.id %}>Cancel Order</a>
   </div>
 {% endblock %}
