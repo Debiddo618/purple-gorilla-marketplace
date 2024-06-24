@@ -3,34 +3,12 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from .models import Product, Order
 from decimal import Decimal
 
 # Create your views here.
-
-
-class OrderUpdate(UpdateView):
-    model = Order
-    fields = ['status']
-
-
-class OrderDelete(DeleteView):
-    model = Order
-
-    def get_success_url(self):
-        user_id = self.object.user.id
-        product = self.object.product
-        product.status = False
-        product.save()
-
-        return reverse('user', kwargs={'user_id': user_id})
-
-
-def order_detail(request, order_id):
-    order = Order.objects.get(id=order_id)
-    return render(request, 'orders/detail.html', {'order': order})
 
 
 def order_create(request, user_id, product_id):
@@ -44,9 +22,35 @@ def order_create(request, user_id, product_id):
     return redirect('user', user_id=user_id)
 
 
+def order_detail(request, order_id):
+    order = Order.objects.get(id=order_id)
+    return render(request, 'orders/detail.html', {'order': order})
+
+
 def confirm_order(request, product_id):
     product = Product.objects.get(id=product_id)
     return render(request, 'orders/confirm_order.html', {'product': product})
+
+
+class OrderUpdate(UpdateView):
+    model = Order
+    fields = ['status']
+
+    def get_success_url(self):
+        order = self.object
+        return reverse('user', kwargs={'user_id': order.product.user.id})
+
+
+class OrderDelete(DeleteView):
+    model = Order
+
+    def get_success_url(self):
+        user_id = self.object.user.id
+        product = self.object.product
+        product.status = False
+        product.save()
+
+        return reverse('user', kwargs={'user_id': user_id})
 
 
 def index(request):
