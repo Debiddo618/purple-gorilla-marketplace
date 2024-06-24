@@ -4,10 +4,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse
+from django.db.models import Q
 from .models import Product, Order
 from decimal import Decimal
 
 # Create your views here.
+
+
+class OrderUpdate(UpdateView):
+    model = Order
+    fields = ['status']
 
 
 class OrderDelete(DeleteView):
@@ -22,7 +28,7 @@ class OrderDelete(DeleteView):
         return reverse('user', kwargs={'user_id': user_id})
 
 
-def order_update(request, order_id):
+def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     return render(request, 'orders/detail.html', {'order': order})
 
@@ -59,7 +65,10 @@ def index(request):
 
 
 def user(request, user_id):
-    orders = Order.objects.filter(user_id=user_id)
+
+    # get orders that belongs to the buyer and also associated with the seller
+    orders = Order.objects.filter(
+        Q(user_id=user_id) | Q(product__user_id=user_id))
     products = Product.objects.filter(user_id=user_id)
     return render(request, 'user.html', {'products': products, 'orders': orders})
 

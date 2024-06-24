@@ -8,34 +8,72 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    <h1>{{user.username}}'s Listings</h1>
+    <h1>My Listings</h1>
     <div class="container">
         <div class="row">
             {% for product in products %}
-                <div class="col-md-3 mb-3">
-                    <div class="card">
-                        <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <a href="{% url "product-detail" product.id %}">
-                                    Name: {{product.name}}
-                                </a>
-                            </div>
-                            <div class="card-text">
-                                <div>Seller: {{product.user}}</div>
-                                <div>Price: ${{product.price}}</div>
-                                <div>Description: {{product.description}}</div>
-                                <div>Category: {{product.get_category_display}}</div>
+                {% if product.status == False %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a href="{% url "product-detail" product.id %}">
+                                        Name: {{product.name}}
+                                    </a>
+                                </div>
+                                <div class="card-text">
+                                    <div>Seller: {{product.user}}</div>
+                                    <div>Price: ${{product.price}}</div>
+                                    <div>Description: {{product.description}}</div>
+                                    <div>Category: {{product.get_category_display}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {%endfor%}
         </div>
     </div>
-    <h1>{{user.username}}'s Sold Items</h1>
-    <h1>{{user.username}}'s Pendings</h1>
-    <h1>{{user.username}}'s Order History</h1>
+    <h1>Sold Items</h1>
+    <h1>Transaction Processing</h1>
+    <div class="container">
+        <div class="row">
+            {% for order in orders %}
+                {% if order.product.status == True %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card">
+                            <img src="{{order.product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <a href="{% url "product-detail" order.product.id %}">
+                                        Product Name: {{order.product.name}}
+                                    </a>
+                                </div>
+                                <div class="card-text">
+                                    <div>Customer Name: {{order.user}}</div>
+                                    <div>Order Status: {{order.status}}</div>
+                                    <a class='btn btn-outline-primary w-100 my-1' href={% url 'order-detail' order.id %}>View Order</a>
+                                    {% if order.product.user == user %}
+                                        {% comment %} <a class='btn btn-outline-success w-100 my-1'>Update Order Status</a> {% endcomment %}
+                                        <form action="{% url 'order-update' order.id %}" method="post">
+                                            {% csrf_token %}
+                                            {{ form.as_p }}
+                                            <button type="submit" class="btn btn-outline-success w-100 my-1">Update Order Status</button>
+                                        </form>
+                                    {% endif %}
+                                    <a class='btn btn-outline-danger my-1 w-100' href={% url 'order-delete' order.id %}>Cancel Order</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {%endfor%}
+        </div>
+    </div>
+    
+
+    <h1>Order History</h1>
     {% for order in orders%}
         <p><a href="{% url 'order-detail' order.id %}">View Order Details</a></p>
         <p>Order #: {{order.id}}</p>

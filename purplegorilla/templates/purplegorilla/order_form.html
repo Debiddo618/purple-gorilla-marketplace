@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+
+{% block head %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/form.css' %}" /> {% endcomment %}
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" class='w-50 mx-auto mt-5 border rounded p-4'>
+        {% csrf_token %}
+        {% if order %}
+        <h1 class='text-center'>Update Order Status</h1>
+        {% endif %}
+        <div class="mb-3">
+            <label for="id_status" class="form-label">Status</label>
+            {{ form.status|add_class:"form-select" }}
+        </div>
+        <button type="submit" class="btn btn-outline-primary w-100">Submit!</button>
+    </form>
+{% endblock %}
