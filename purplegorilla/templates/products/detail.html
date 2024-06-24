@@ -5,20 +5,25 @@
 {% endblock %}
 
 {% block content %}
-<div class="card" style="width: 18rem;">
-    <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="">
-    <div class="card-body">
-        <div class="card-title">
-            Name: {{product.name}}
+
+<div class="container p-3">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{product.image}}" class="card-img-top" alt="product image">
         </div>
-        <div class="card-text">
-            <div>Seller: {{product.user}}</div>
-            <div>Price: ${{product.price}}</div>
-            <div>Description: {{product.description}}</div>
-            <div>Category: {{product.get_category_display}}</div>
+        <div class="col-md-6">
+            <div class="display-5 mb-3">{{product.name}}</div>
+            <div class="display-6 mb-3 text-success">Price: ${{product.price}}</div>
+            <div class="display-7 mb-3">Category: {{product.get_category_display}}</div>
+            <div class="display-7 mb-3">Seller: {{product.user}}</div>
+            <div class="display-8 mb-3">Description: {{product.description}}</div>
             {% if product.user == user %}
-                <a href="{% url 'product-update' product.id %}" class="btn warn">Edit</a>
-                <a href="{% url 'product-delete' product.id %}" class="btn danger">Delete</a>
+                <a class='btn btn-outline-success w-100 mb-3' href="{% url 'product-update' product.id %}" class="btn warn">Edit</a>
+                <a class='btn btn-outline-danger w-100 mb-3' href="{% url 'product-delete' product.id %}" class="btn danger">Delete</a>
+            {% else %}
+                {% if product.status == False %}
+                    <a class='btn btn-outline-warning w-100' href={% url 'order-create' user.id product.id %}>Place your Order</a>
+                {% endif %}
             {% endif %}
         </div>
     </div>
