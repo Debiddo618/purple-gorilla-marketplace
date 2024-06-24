@@ -19,5 +19,4 @@ urlpatterns = [
     path('order/create/<int:user_id>/<int:product_id>',
          views.order_create, name="order-create"),
     path('accounts/signup/', views.signup, name='signup'),
-
 ]

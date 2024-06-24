@@ -138,6 +138,5 @@ def signup(request):
     form = UserCreationForm()
     return render(request, 'signup.html', {'form': form, 'error_message': error_message})
 
-
 class Home(LoginRequiredMixin, LoginView):
     template_name = 'home.html'
