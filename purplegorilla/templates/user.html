@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-{% comment %} <link rel="stylesheet" href="{% static 'css/home.css' %}" /> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -18,14 +18,14 @@
                             <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a href="{% url "product-detail" product.id %}">
+                                    <a class='product-link w-100' href="{% url "product-detail" product.id %}">
                                         Name: {{product.name}}
                                     </a>
                                 </div>
                                 <div class="card-text">
                                     <div>Seller: {{product.user}}</div>
                                     <div>Price: ${{product.price}}</div>
-                                    <div>Description: {{product.description}}</div>
+                                    <div class='product-detail'>Description: {{product.description}}</div>
                                     <div>Category: {{product.get_category_display}}</div>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             </th>
                             <td>{{order.created_at}}</td>
                             <td>{{order.product.user}}</td>
-                            <td>
+                            <td class='w-50'>
                                 <a href="{% url "product-detail" order.product.id %}">
                                     Product Name: {{order.product.name}}
                                 </a>
