@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.db.models import Q
 from .models import Product, Order
 from decimal import Decimal
@@ -69,11 +69,21 @@ def index(request):
 
 
 def user(request, user_id):
-
     # get orders that belongs to the buyer and also associated with the seller
     orders = Order.objects.filter(
         Q(user_id=user_id) | Q(product__user_id=user_id))
     products = Product.objects.filter(user_id=user_id)
+
+    product_name = request.GET.get('product_name')
+    product_category = request.GET.get('category')
+    if product_name != '' and product_name is not None:
+        products = Product.objects.filter(
+            name__icontains=product_name, status=False, user_id=user_id)
+
+    if product_category != '' and product_category is not None:
+        products = Product.objects.filter(
+            category=product_category, status=False, user_id=user_id)
+
     return render(request, 'user.html', {'products': products, 'orders': orders})
 
 
