@@ -7,48 +7,9 @@ from django.urls import reverse
 from django.db.models import Q
 from .models import Product, Order
 from decimal import Decimal
-import requests
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 
-
-# Create your views here.
-
-
-# api to create fake products
-def fetch_fake_products():
-    api_url = 'https://fakestoreapi.com/products'
-
-    dummy_user = User.objects.filter(username='dummy_user')
-
-    if (not dummy_user):
-        try:
-            response = requests.get(api_url)
-            data = response.json()
-
-            user = User.objects.create_user(
-                username='dummy_user', email='dummy@example.com', password='password123')
-
-            for product in data:
-                if (product['category'] == "men's clothing" or product['category'] == "women's clothing" or product['category'] == "jewelery"):
-                    category = 'F'
-                elif (product['category'] == 'electronics'):
-                    category = 'E'
-
-                Product.objects.create(
-                    name=product['title'],
-                    price=product['price'],
-                    image=product['image'],
-                    description=product['description'],
-                    category=category,
-                    user=user
-                )
-        except Exception as err:
-            return HttpResponse(f"An error occurred: {err}")
-
-
-fetch_fake_products()
-
+# Run this command to seed the database: python3 manage.py seed --mode=refresh
+# Run this command to delete all products in database: python3 manage.py seed --mode=clear
 
 def order_create(request, user_id, product_id):
     product = Product.objects.get(id=product_id)
