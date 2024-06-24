@@ -8,6 +8,13 @@
 {% block content %}
 
 {% if not user.is_authenticated %}
+{% if form.errors %}
+    {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+            <div class="alert alert-danger mx-auto w-50 mt-3" role="alert">{{ error }}</div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
 <section class='w-25 mx-auto mt-5 border rounded p-4'>
     <form action="{% url 'home' %}" method="post" class="login">
         <h1 class='text-center'>Login</h1>

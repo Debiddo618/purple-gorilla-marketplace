@@ -1,21 +1,35 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load form_tags %}
+
 
 {% block head %}
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Sign Up</h1>
-</div>
+
 {% if error_message %}
-<p class="red-text">{{ error_message }}</p>
+    <div class="alert alert-danger mx-auto w-50 mt-3" role="alert">{{ error_message }}</div>
 {% endif %}
-<form action="" method="post" class="form-container" autocomplete="off">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <button type="submit" class="btn submit">Submit!</button>
-</form>
+<section class='w-25 mx-auto mt-5 border rounded p-4'>
+    <form action="" method="post" class="form-container" autocomplete="off">
+        <h1 class='text-center'>Sign Up</h1>
+        {% csrf_token %}
+    
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Username</label>
+            {{ form.username|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">Password</label>
+            {{ form.password1|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="id_password2" class="form-label">Password Confirmation</label>
+            {{ form.password2|add_class:"form-control" }}
+        </div>
+    
+        <button type="submit" class="btn btn-outline-success w-100 submit">Submit!</button>
+    </form>
+</section>
 {% endblock %}
