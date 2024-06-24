@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load form_tags %}
 
 {% block head %}
 {% endblock %}
@@ -7,12 +8,20 @@
 {% block content %}
 
 {% if not user.is_authenticated %}
-<section>
+<section class='w-25 mx-auto mt-5 border rounded p-4'>
     <form action="{% url 'home' %}" method="post" class="login">
-        <h1>Login</h1>
-        {% csrf_token %} {{ form.as_p }}
+        <h1 class='text-center'>Login</h1>
+        {% csrf_token %} 
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Username</label>
+            {{ form.username|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Password</label>
+            {{ form.password|add_class:"form-control" }}
+        </div>
         <input type="hidden" name="next" value="{{ next }}" />
-        <button type="submit" class="btn submit">Login</button>
+        <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
     </form>
 </section>
 {% endif %}
