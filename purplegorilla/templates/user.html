@@ -8,8 +8,8 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-    <h1>My Listings</h1>
-    <div class="container">
+    <div class="container my-3">
+        <h1 class='text-center'>My Listings</h1>
         <div class="row">
             {% for product in products %}
                 {% if product.status == False %}
@@ -35,57 +35,88 @@
             {%endfor%}
         </div>
     </div>
-    <h1>Sold Items</h1>
-    <h1>Transaction Processing</h1>
-    <div class="container">
-        <div class="row">
-            {% for order in orders %}
-                {% if order.product.status == True %}
-                    <div class="col-md-3 mb-3">
-                        <div class="card">
-                            <img src="{{order.product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
-                            <div class="card-body">
-                                <div class="card-title">
-                                    <a href="{% url "product-detail" order.product.id %}">
-                                        Product Name: {{order.product.name}}
-                                    </a>
-                                </div>
-                                <div class="card-text">
-                                    <div>Customer Name: {{order.user}}</div>
-                                    <div>Order Status: {{order.status}}</div>
-                                    <a class='btn btn-outline-primary w-100 my-1' href={% url 'order-detail' order.id %}>View Order</a>
-                                    {% if order.product.user == user %}
-                                        {% comment %} <a class='btn btn-outline-success w-100 my-1'>Update Order Status</a> {% endcomment %}
-                                        <form action="{% url 'order-update' order.id %}" method="post">
-                                            {% csrf_token %}
-                                            {{ form.as_p }}
-                                            <button type="submit" class="btn btn-outline-success w-100 my-1">Update Order Status</button>
-                                        </form>
-                                    {% endif %}
-                                    <a class='btn btn-outline-danger my-1 w-100' href={% url 'order-delete' order.id %}>Cancel Order</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {%endfor%}
-        </div>
+    <div class="container my-3">
+        <h1 class='text-center'>Order Manager</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Order Placed</th>
+                <th scope="col">Ship To</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Update Order Status</th>
+                <th scope="col">Cancel Order</th>
+                <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders%}
+                    {% if order.product.status == True and order.user != user %}
+                        <tr>
+                            <th scope="row">
+                                <a href={% url 'order-detail' order.id %}>{{order.id}}</a>
+                            </th>
+                            <td>{{order.created_at}}</td>
+                            <td>{{order.user}}</td>
+                            <td>
+                                <a href="{% url "product-detail" order.product.id %}">
+                                    {{order.product.name}}
+                                </a>
+                            </td>
+                            <td>{{order.status}}</td>
+                            <td >
+                                <a href="{% url 'order-update' order.id %}">
+                                    <i class="bi bi-pencil-square text-success text-center"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href={% url 'order-delete' order.id %}>
+                                    <i class="bi bi-x-square-fill text-danger"></i>
+                                </a>
+                            </td>
+                            <td>{{order.total_price}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    
 
-    <h1>Order History</h1>
-    {% for order in orders%}
-        <p><a href="{% url 'order-detail' order.id %}">View Order Details</a></p>
-        <p>Order #: {{order.id}}</p>
-        <p>Order Placed: {{order.created_at}}</p>
-        <p>User: {{order.user}}</p>
-        <p>Product: {{order.product}}</p>
-        <p>Seller: {{order.product.user}}</p>
-        <p>Product Decription: {{order.product.description}}</p>
-        <p>Status: {{order.status}}</p>
-        <p>Order Total: {{order.total_price}}</p>
-    {% endfor %}
-
-
+    <div class="container">
+        <h1 class='text-center'>Purchase History</h1>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Order Placed</th>
+                <th scope="col">Ship From</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for order in orders%}
+                    {% if order.user == user %}
+                        <tr>
+                            <th scope="row">
+                                <a href={% url 'order-detail' order.id %}>{{order.id}}</a>
+                            </th>
+                            <td>{{order.created_at}}</td>
+                            <td>{{order.product.user}}</td>
+                            <td>
+                                <a href="{% url "product-detail" order.product.id %}">
+                                    Product Name: {{order.product.name}}
+                                </a>
+                            </td>
+                            <td>{{order.status}}</td>
+                            <td>{{order.total_price}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endif %}
 {% endblock %}
