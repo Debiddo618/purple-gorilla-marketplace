@@ -22,7 +22,7 @@
                 <a class='btn btn-outline-danger w-100 mb-3' href="{% url 'product-delete' product.id %}" class="btn danger">Delete</a>
             {% else %}
                 {% if product.status == False %}
-                    <a class='btn btn-outline-warning w-100' href={% url 'order-create' user.id product.id %}>Place your Order</a>
+                    <a class='btn btn-outline-warning w-100' href={% url 'order-confirm' product.id %}>Place your Order</a>
                 {% endif %}
             {% endif %}
         </div>
