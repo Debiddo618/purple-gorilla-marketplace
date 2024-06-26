@@ -5,6 +5,10 @@
     --fur-color: rgba(39, 52, 58, 1);
     --fur-color-lighter: rgba(78, 104, 116, 1);
     --fur-color-darker: rgba(20, 27, 30, 1);
+
+    --sign-color: rgba(154, 83, 37, 255);
+    --sign-color-dark: rgba(95, 50, 21, 255);
+    --sign-color-light: rgba(190, 114, 62, 255);
 }
 
 .head {
@@ -285,4 +289,24 @@
             var(--skin-color-lighter) 0%,
             var(--skin-color) 50%,
             var(--skin-color-darker) 100%);
+}
+
+.board {
+    position: relative;
+    border: 5px solid black;
+    background: linear-gradient(to bottom,
+            var(--sign-color-light) 0%,
+            var(--sign-color) 50%,
+            var(--sign-color-dark) 100%);
+}
+
+.stand {
+    z-index: -3;
+    position: absolute;
+    border: 5px solid black;
+    width: 25px;
+    background: linear-gradient(to bottom,
+            var(--sign-color-light) 0%,
+            var(--sign-color) 50%,
+            var(--sign-color-dark) 100%);
 }

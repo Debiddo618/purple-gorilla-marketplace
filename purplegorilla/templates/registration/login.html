@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mt-5">
             {% if form.errors %}
                 {% for field, errors in form.errors.items %}
                     {% for error in errors %}
@@ -76,25 +76,34 @@
                     {% endfor %}
                 {% endfor %}
             {% endif %}
-            <section class='mx-auto mt-5 border rounded p-4'>
-                <form method="post" class="login">
-                    <h1 class='text-center'>Login</h1>
-                    {% csrf_token %} 
-                    <div class="mb-3">
-                        <label for="id_username" class="form-label">Username</label>
-                        {{ form.username|add_class:"form-control" }}
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_password" class="form-label">Password</label>
-                        {{ form.password|add_class:"form-control" }}
-                    </div>
-                    <input type="hidden" name="next" value="{% url 'product-index' %}" />
-                    <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
-                </form>
-            </section>
+            <div class="board p-5 mt-5">
+                <section class='mx-auto border rounded p-4 bg-light board-form'>
+                    <form method="post" class="login">
+                        <div class="container d-flex justify-content-center">
+                            <svg width="100" height="100" id="svgContainer" style="scale">
+                                <polygon id="filledPolygon" points="" fill="none" stroke="black" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <h1 class='text-center'>Login</h1>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username</label>
+                            {{ form.username|add_class:"form-control" }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Password</label>
+                            {{ form.password|add_class:"form-control" }}
+                        </div>
+                        <input type="hidden" name="next" value="{% url 'product-index' %}" />
+                        <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
+                    </form>
+                </section>
+                <div class="stand top-75 start-50 translate-middle h-75"></div>
+            </div>
         </div>
     </div>
 </div>
+
 
 {% endif %}
 {% endblock %}
