@@ -3,33 +3,98 @@
 {% load form_tags %}
 
 {% block head %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
 {% endblock %}
 
 {% block content %}
 
 {% if not user.is_authenticated %}
-{% if form.errors %}
-    {% for field, errors in form.errors.items %}
-        {% for error in errors %}
-            <div class="alert alert-danger mx-auto w-50 mt-3" role="alert">{{ error }}</div>
-        {% endfor %}
-    {% endfor %}
-{% endif %}
-<section class='w-25 mx-auto mt-5 border rounded p-4'>
-    <form method="post" class="login">
-        <h1 class='text-center'>Login</h1>
-        {% csrf_token %} 
-        <div class="mb-3">
-            <label for="id_username" class="form-label">Username</label>
-            {{ form.username|add_class:"form-control" }}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="gorilla">
+                <div class="head">
+                    <div class="face-top">
+                        <div class="ears">
+                            <div class="ear-left"></div>
+                            <div class="ear-right"></div>
+                        </div>
+                        <div class="eyes">
+                            <div class="eye-left">
+                                <div class="eyeballs">
+                                    <div class="eyeball"></div>
+                                </div>
+                            </div>
+                            <div class="eye-right">
+                                <div class="eyeballs">
+                                    <div class="eyeball"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="face-bottom">
+                        <div class="nose">
+                            <div class="nose-left">
+                            </div>
+                            <div class="nose-right"></div>
+                        </div>
+                        <div class="mouth">
+                            <div class="smile">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="arms">
+                        <div class="arm-left"></div>
+                        <div class="arm-right"></div>
+                    </div>
+                    <div class="chest">
+                        <div class="chest-left"></div>
+                        <div class="chest-right"></div>
+                    </div>
+                    <div class="belly">
+                        <div class="stomach"></div>
+                    </div>
+                    <div class="hands">
+                        <div class="hand-left"></div>
+                        <div class="hand-right"></div>
+                    </div>
+                    <div class="feets">
+                        <div class="feet-left"></div>
+                        <div class="feet-right"></div>
+                    </div>
+        
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="id_password" class="form-label">Password</label>
-            {{ form.password|add_class:"form-control" }}
+        <div class="col-md-6">
+            {% if form.errors %}
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <div class="alert alert-danger mx-auto w-100 mt-3" role="alert">{{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            <section class='mx-auto mt-5 border rounded p-4'>
+                <form method="post" class="login">
+                    <h1 class='text-center'>Login</h1>
+                    {% csrf_token %} 
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Password</label>
+                        {{ form.password|add_class:"form-control" }}
+                    </div>
+                    <input type="hidden" name="next" value="{% url 'product-index' %}" />
+                    <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
+                </form>
+            </section>
         </div>
-        <input type="hidden" name="next" value="{% url 'product-index' %}" />
-        <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
-    </form>
-</section>
+    </div>
+</div>
+
 {% endif %}
 {% endblock %}
