@@ -8,29 +8,91 @@
 {% endblock %}
 
 {% block content %}
-
-{% if error_message %}
-    <div class="alert alert-danger mx-auto w-50 mt-3" role="alert">{{ error_message }}</div>
-{% endif %}
-<section class='w-25 mx-auto mt-5 border rounded p-4'>
-    <form action="" method="post" class="form-container" autocomplete="off">
-        <h1 class='text-center'>Sign Up</h1>
-        {% csrf_token %}
-    
-        <div class="mb-3">
-            <label for="id_username" class="form-label">Username</label>
-            {{ form.username|add_class:"form-control" }}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="gorilla">
+                <div class="head">
+                    <div class="face-top">
+                        <div class="ears">
+                            <div class="ear-left"></div>
+                            <div class="ear-right"></div>
+                        </div>
+                        <div class="eyes">
+                            <div class="eye-left">
+                                <div class="eyeballs">
+                                    <div class="eyeball"></div>
+                                </div>
+                            </div>
+                            <div class="eye-right">
+                                <div class="eyeballs">
+                                    <div class="eyeball"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="face-bottom">
+                        <div class="nose">
+                            <div class="nose-left">
+                            </div>
+                            <div class="nose-right"></div>
+                        </div>
+                        <div class="mouth">
+                            <div class="smile">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="arms">
+                        <div class="arm-left"></div>
+                        <div class="arm-right"></div>
+                    </div>
+                    <div class="chest">
+                        <div class="chest-left"></div>
+                        <div class="chest-right"></div>
+                    </div>
+                    <div class="belly">
+                        <div class="stomach"></div>
+                    </div>
+                    <div class="hands">
+                        <div class="hand-left"></div>
+                        <div class="hand-right"></div>
+                    </div>
+                    <div class="feets">
+                        <div class="feet-left"></div>
+                        <div class="feet-right"></div>
+                    </div>
+        
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="id_password1" class="form-label">Password</label>
-            {{ form.password1|add_class:"form-control" }}
+        <div class="col-md-6">
+            {% if error_message %}
+                <div class="alert alert-danger mx-auto w-50 mt-3" role="alert">{{ error_message }}</div>
+            {% endif %}
+            <section class='mx-auto mt-5 border rounded p-4'>
+                <form action="" method="post" class="form-container" autocomplete="off">
+                    <h1 class='text-center'>Sign Up</h1>
+                    {% csrf_token %}
+                
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label">Password</label>
+                        {{ form.password1|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">Password Confirmation</label>
+                        {{ form.password2|add_class:"form-control" }}
+                    </div>
+                
+                    <button type="submit" class="btn btn-outline-success w-100 submit">Sign Up</button>
+                </form>
+            </section>
         </div>
-        <div class="mb-3">
-            <label for="id_password2" class="form-label">Password Confirmation</label>
-            {{ form.password2|add_class:"form-control" }}
-        </div>
-    
-        <button type="submit" class="btn btn-outline-success w-100 submit">Submit!</button>
-    </form>
-</section>
+    </div>
+</div>
 {% endblock %}
