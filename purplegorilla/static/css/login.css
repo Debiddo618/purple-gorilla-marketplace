@@ -44,6 +44,7 @@
     background-color: white;
     left: 15%;
     margin-top: 15%;
+    overflow: hidden;
 }
 
 .eye-right {
@@ -54,6 +55,7 @@
     background-color: white;
     right: 15%;
     margin-top: 15%;
+    overflow: hidden;
 }
 
 .eyeball {
@@ -64,6 +66,7 @@
     background-color: black;
     margin-top: 25%;
     right: 25%;
+    animation: move-eyes 6s ease-in-out infinite;
 }
 
 
@@ -146,6 +149,7 @@
     margin-top: 10%;
     left: 35%;
     background-color: black;
+    animation: breathing 4s infinite;
 }
 
 .nose-right {
@@ -157,6 +161,8 @@
     margin-top: 10%;
     right: 35%;
     background-color: black;
+    animation: breathing 4s infinite;
+
 }
 
 .smile {
@@ -214,8 +220,8 @@
     position: absolute;
     width: 150px;
     height: 300px;
-    border-top-left-radius: 10%;
-    border-top-right-radius: 10%;
+    border-radius: 10%;
+
     left: -17%;
     margin-top: 5%;
     background: linear-gradient(to bottom right,
@@ -228,8 +234,8 @@
     position: absolute;
     width: 150px;
     height: 300px;
-    border-top-left-radius: 10%;
-    border-top-right-radius: 10%;
+    border-radius: 10%;
+
     right: -17%;
     margin-top: 5%;
     background: linear-gradient(to bottom left,
@@ -250,6 +256,7 @@
             var(--skin-color-lighter) 0%,
             var(--skin-color) 50%,
             var(--skin-color-darker) 100%);
+    animation: hit-chest-left ease-in-out 1s infinite;
 }
 
 .hand-right {
@@ -263,6 +270,8 @@
             var(--skin-color-lighter) 0%,
             var(--skin-color) 50%,
             var(--skin-color-darker) 100%);
+    animation: hit-chest-right 1s infinite;
+
 }
 
 .feet-left {
@@ -309,4 +318,49 @@
             var(--sign-color-light) 0%,
             var(--sign-color) 50%,
             var(--sign-color-dark) 100%);
+}
+
+@keyframes move-eyes {
+
+    0%,
+    10%,
+    30%,
+    80%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-80%);
+    }
+
+    90% {
+        transform: translateX(80%);
+    }
+}
+
+@keyframes breathing {
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes hit-chest-left {
+    25% {
+        transform: translate(100px, -100px);
+    }
+
+    75% {
+        transform: translate(0);
+    }
+}
+
+@keyframes hit-chest-right {
+    25% {
+        transform: translate(0);
+    }
+
+    75% {
+        transform: translate(-100px, -100px);
+    }
 }
