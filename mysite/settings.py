@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url
 import os
 
 load_dotenv()
@@ -28,7 +29,7 @@ os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 if not 'ON_HEROKU' in os.environ:
     DEBUG = True
-    
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -96,7 +97,6 @@ else:
             'NAME': 'purplegorilla',
         }
     }
-
 
 
 # Password validation
