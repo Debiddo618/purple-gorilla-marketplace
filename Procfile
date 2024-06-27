@@ -1,1 +1,1 @@
-web: gunicorn purplegorilla.wsgi
+web: gunicorn mysite.wsgi
