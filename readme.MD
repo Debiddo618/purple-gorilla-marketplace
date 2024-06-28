@@ -23,13 +23,15 @@ For the initial Postgres database seeding, I borrowed the code from this stackov
 python3 manage.py seed --mode=refresh
 ```
 
-## :blue_book: Wireframes:
+## :blue_book: Wireframes and ERD:
 
 These are some page blueprints used to guide the development process.
 
 ![wireframe](./purplegorilla/static/images/kong1.jpg)
 ![wireframe](./purplegorilla/static/images/kong2.jpg)
 ![wireframe](./purplegorilla/static/images/kong3.jpg)
+![wireframe](./purplegorilla/static/images/kong4.jpg)
+![wireframe](./purplegorilla/static/images/kong5.png)
 
 
 
