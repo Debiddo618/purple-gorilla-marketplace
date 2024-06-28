@@ -30,5 +30,24 @@
             <button type="submit" class="btn btn-outline-success w-100 submit">Login</button>
         </form>
     </section>
+{% else %}
+    <div class="display-1 text-center">Welcome to Kong's Market</div>
+    <div class="w-100 d-flex justify-content-center">
+        <img src="{% static 'images/gorilla.png' %}" alt="Logo">
+    </div>
+    <div class="links d-flex justify-content-center py-3">
+        <a class="btn btn-outline-primary w-25 m-1" href="{% url 'product-index'%}">Swing into Savings</a>
+    </div>
+    <div class="slider mx-auto">
+        <div class="slide active">
+          <h1 class="animated-text">Shop like a Trillionaire!</h1>
+        </div>
+        <div class="slide">
+          <h1 class="animated-text">Free Returns Within 90 days</h1>
+        </div>
+        <div class="slide">
+          <h1 class="animated-text">Price Adjustment Within 30 days</h1>
+        </div>
+    </div>
 {% endif %}
 {% endblock %}

@@ -18,8 +18,9 @@
                             <img src="{{product.image}}" class="card-img-top" style="height: 300px; object-fit: cover;" alt="Product Image">
                             <div class="card-body">
                                 <div class="card-title">
-                                    <a class='product-link w-100' href="{% url "product-detail" product.id %}">
-                                        Name: {{product.name}}
+                                    Name: 
+                                    <a class='product-link w-100 d-inline' href="{% url "product-detail" product.id %}">
+                                        {{product.name}}
                                     </a>
                                 </div>
                                 <div class="card-text">
@@ -107,7 +108,7 @@
                             <td>{{order.product.user}}</td>
                             <td class='w-50'>
                                 <a href="{% url "product-detail" order.product.id %}">
-                                    Product Name: {{order.product.name}}
+                                    {{order.product.name}}
                                 </a>
                             </td>
                             <td>{{order.status}}</td>
