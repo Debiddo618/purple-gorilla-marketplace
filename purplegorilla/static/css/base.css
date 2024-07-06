@@ -31,20 +31,20 @@ body {
 
 #box1 {
     background-color: #CADCFC;
-    z-index: 3;
+    z-index: 4;
     animation: expand 2s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 #box2 {
     background-color: #8AB6F9;
-    z-index: 2;
+    z-index: 3;
     animation: expand2 2s ease-in-out;
     animation-fill-mode: forwards;
 }
 
 #box3 {
-    z-index: 1;
+    z-index: 2;
     background-color: #00246B;
     width: 200%;
     animation: expand3 2s ease-in-out;
@@ -55,6 +55,15 @@ header,
 main {
     animation: fade-in 1s linear;
     animation-fill-mode: forwards;
+}
+
+main {
+    z-index: -1;
+}
+
+header {
+    z-index: 1;
+    position: relative;
 }
 
 .slider {
@@ -106,6 +115,7 @@ main {
 }
 
 @keyframes fade-in {
+
     0%,
     50%,
     95% {
